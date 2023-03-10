@@ -51,6 +51,6 @@ object Main {
   def main(args: Array[String]): Unit = {
     val lst = List('a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e')
     println(remDup_b(lst))
-
+    //Comment
   }
 }
