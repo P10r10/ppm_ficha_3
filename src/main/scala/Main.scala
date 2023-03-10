@@ -6,21 +6,21 @@ object Main {
 
 //    a) without using an if
 
-  def fact_a(x: Int): Int = x match {
+  def factA(x: Int): Int = x match {
     case 0 => 1
-    case y => y * fact_a(x - 1)
+    case y => y * factA(x - 1)
   }
 
 //    b) using an if
 
-  def fact_b(x: Int): Int = {
+  def factB(x: Int): Int = {
     if (x == 0) 1
-    else x * fact_b(x - 1)
+    else x * factB(x - 1)
   }
 
 //    c) tail recursive
 
-  def fact_c(x: Int) = {
+  def factC(x: Int) = {
     @tailrec
     def aux(acc: Int, y: Int): Int = y match {
       case 0 => acc
@@ -35,14 +35,14 @@ object Main {
 
 //  a) standard recursive
 
-  def remDup_a[A](lst: List[A]): List[A] = lst match {
+  def remDupA[A](lst: List[A]): List[A] = lst match {
     case Nil => Nil
-    case h :: t => h :: remDup_a(t.dropWhile(_ == h))
+    case h :: t => h :: remDupA(t.dropWhile(_ == h))
   }
 
 //  b) tail recursive
 
-  def remDup_b[A](lst: List[A]): List[A] = {
+  def remDupB[A](lst: List[A]): List[A] = {
     @tailrec
     def aux(acc_lst: List[A], lst1: List[A]):List[A] = lst1 match {
       case Nil => acc_lst
@@ -57,10 +57,19 @@ object Main {
 //  new list by adding corresponding elements.
 //  For example, List(1, 2, 3) and List(4, 5, 6) becomes List(5, 7, 9).
 
+  def addLists(lst1: List[Int], lst2: List[Int]):List[Int] = (lst1, lst2)  match {
+    case (Nil, Nil) => Nil
+    case (h1 :: t1, h2 :: t2) => h1 + h2 :: addLists(t1, t2)
+  }
 
+//  b) Generalize the function you just wrote so that it is not specific to integers or addition.
+//  Name your generalized function zipWith.
+
+  def zipWith[A](lst1: List[A], lst2: List[A]):List[A] = //TODO
 
   def main(args: Array[String]): Unit = {
-    val lst = List('a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e')
-    println(remDup_b(lst))
+    val lst1 = List(1, 2, 3)
+    val lst2 = List(4, 5, 6)
+    println(addLists(lst1, lst2))
   }
 }
