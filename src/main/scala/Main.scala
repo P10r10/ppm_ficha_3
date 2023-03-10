@@ -29,7 +29,6 @@ object Main {
     aux(1, x)
   }
 
-
 //  1.2.Define two versions of the remDup polymorphic / generic method that eliminates
 //    consecutive duplicates of a list of elements. Use the dropWhile function.
 
@@ -65,11 +64,16 @@ object Main {
 //  b) Generalize the function you just wrote so that it is not specific to integers or addition.
 //  Name your generalized function zipWith.
 
-  def zipWith[A](lst1: List[A], lst2: List[A]):List[A] = //TODO
+  def zipWith[A](f: (A, A) => A)(lst1: List[A], lst2: List[A]): List[A] = (lst1, lst2) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (h1 :: t1, h2 :: t2) => f(h1, h2) :: zipWith(f)(t1, t2)
+  }
+
 
   def main(args: Array[String]): Unit = {
-    val lst1 = List(1, 2, 3)
-    val lst2 = List(4, 5, 6)
-    println(addLists(lst1, lst2))
+    val lst1 = List("1", "2", "3")
+    val lst2 = List("4", "5", "6")
+    println(zipWith[String](_ + _)(lst1, lst2))
   }
 }
