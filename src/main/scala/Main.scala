@@ -31,7 +31,7 @@ object Main {
   }
 
   //  1.2.Define two versions of the remDup polymorphic / generic method that eliminates
-  //    consecutive duplicates of a list of elements. Use the dropWhile function.
+  //  consecutive duplicates of a list of elements. Use the dropWhile function.
 
   //  a) standard recursive
 
@@ -72,21 +72,35 @@ object Main {
     case (h1 :: t1, h2 :: t2) => f(h1, h2) :: zipWith(f)(t1, t2)
   }
 
-
   //  c) Implement isSorted, which checks whether a List[A] is sorted according to a given
   //  comparison function:
 
   def isSorted[A](lst: List[A], ordered: (A, A) => Boolean): Boolean = lst match {
     case Nil => true
     case _ :: Nil => true
-    case x :: y :: tail => if (ordered(x, y)) isSorted(y :: tail, ordered)
-    else false
+    case x :: y :: tail => (ordered(x, y)) && isSorted(y :: tail, ordered)
   }
 
+//  d) Implement bubbleSort (recursive) that can be used for ascending / descending ordering.
+
+//  def bubbleSort(data: List[Int], f: (Int, Int) => Boolean): List[Int] = //TODO
+
+//  Exercise 4
+
+//  Define the following three new functions and say if they match any of the patterns
+//  (mapping, filtering, folding)
+
+//  a) paresord function that receives a list of pairs of numbers and returns only the pairs
+//  in that the first component is inferior to the second.
+
+  def paresord(lst: List[(Int, Int)]):List[(Int, Int)] = lst match {
+    case Nil => Nil
+    case h :: t => if (h._1 < h._2) h :: paresord(t) else
+                  paresord(t)
+  }
 
   def main(args: Array[String]): Unit = {
-    val lst1 = List(1, 3, 5, 7, 11)
-    val lst2 = List(9, 3, -5, -1000, -500)
-    println(isSorted[Int](lst2, (_ > _)))
+    val lst = List((1,2), (4,3), (5,10), (3,1), (9,11))
+    println(paresord(lst))
   }
 }
