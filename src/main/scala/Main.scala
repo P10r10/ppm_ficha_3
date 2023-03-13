@@ -99,8 +99,36 @@ object Main {
                   paresord(t)
   }
 
+//  b) myconcat function that receives a list of strings and joins them(concatenated) in
+//  a single string.
+
+  def myconcat(lst: List[String]):String = lst match {
+    case Nil => ""
+    case h :: t => h + myconcat(t)
+  }
+
+  def myconcat2(lst: List[String]):String = (lst foldLeft "") (_ ++ _)
+
+//  c) maximum function that receives a list of pairs of numbers (of type Double) and calculates
+//  a list with just the largest element of each pair.
+//  Example: List((2.0, 4.0), (3.2, 1, 9)) => List(4.0, 3.2)
+
+  def maximum(lst: List[(Double, Double)]):List[Double] = lst match {
+    case Nil => Nil
+    case h :: t => if (h._1 > h._2) h._1 :: maximum(t)
+                  else h._2 :: maximum(t)
+  }
+
+  def maximum2(lst: List[(Double, Double)]):List[Double] = {
+    lst map(x => if (x._1 > x._2) x._1 else x._2)
+  }
+
   def main(args: Array[String]): Unit = {
-    val lst = List((1,2), (4,3), (5,10), (3,1), (9,11))
-    println(paresord(lst))
+    val lst = List((2.0, 4.0), (3.2, 1.9), (20.3, 4.0), (3.2, 10.9))
+    val lst1 = List("Alex", "Is", "Someone", "Who", "Likes", "To", "Code")
+    println(myconcat(lst1))
+    println(myconcat2(lst1))
+    println(maximum(lst))
+    println(maximum2(lst))
   }
 }
