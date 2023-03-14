@@ -81,54 +81,68 @@ object Main {
     case x :: y :: tail => (ordered(x, y)) && isSorted(y :: tail, ordered)
   }
 
-//  d) Implement bubbleSort (recursive) that can be used for ascending / descending ordering.
+  //  d) Implement bubbleSort (recursive) that can be used for ascending / descending ordering.
 
-//  def bubbleSort(data: List[Int], f: (Int, Int) => Boolean): List[Int] = //TODO
+  //  def bubbleSort(data: List[Int], f: (Int, Int) => Boolean): List[Int] = //TODO
 
-//  Exercise 4
+  //  Exercise 4
 
-//  Define the following three new functions and say if they match any of the patterns
-//  (mapping, filtering, folding)
+  //  Define the following three new functions and say if they match any of the patterns
+  //  (mapping, filtering, folding)
 
-//  a) paresord function that receives a list of pairs of numbers and returns only the pairs
-//  in that the first component is inferior to the second.
+  //  a) paresord function that receives a list of pairs of numbers and returns only the pairs
+  //  in that the first component is inferior to the second.
 
-  def paresord(lst: List[(Int, Int)]):List[(Int, Int)] = lst match {
+  def paresord(lst: List[(Int, Int)]): List[(Int, Int)] = lst match {
     case Nil => Nil
     case h :: t => if (h._1 < h._2) h :: paresord(t) else
-                  paresord(t)
+      paresord(t)
   }
 
-//  b) myconcat function that receives a list of strings and joins them(concatenated) in
-//  a single string.
+  def paresord2(lst: List[(Int, Int)]): List[(Int, Int)] = lst filter (x => x._1 < x._2)
 
-  def myconcat(lst: List[String]):String = lst match {
+  //  b) myconcat function that receives a list of strings and joins them(concatenated) in
+  //  a single string.
+
+  def myconcat(lst: List[String]): String = lst match {
     case Nil => ""
     case h :: t => h + myconcat(t)
   }
 
-  def myconcat2(lst: List[String]):String = (lst foldLeft "") (_ ++ _)
+  def myconcat2(lst: List[String]): String = (lst foldLeft "")(_ ++ _)
 
-//  c) maximum function that receives a list of pairs of numbers (of type Double) and calculates
-//  a list with just the largest element of each pair.
-//  Example: List((2.0, 4.0), (3.2, 1, 9)) => List(4.0, 3.2)
+  //  c) maximum function that receives a list of pairs of numbers (of type Double) and calculates
+  //  a list with just the largest element of each pair.
+  //  Example: List((2.0, 4.0), (3.2, 1, 9)) => List(4.0, 3.2)
 
-  def maximum(lst: List[(Double, Double)]):List[Double] = lst match {
+  def maximum(lst: List[(Double, Double)]): List[Double] = lst match {
     case Nil => Nil
     case h :: t => if (h._1 > h._2) h._1 :: maximum(t)
-                  else h._2 :: maximum(t)
+    else h._2 :: maximum(t)
   }
 
-  def maximum2(lst: List[(Double, Double)]):List[Double] = {
-    lst map(x => if (x._1 > x._2) x._1 else x._2)
+  def maximum2(lst: List[(Double, Double)]): List[Double] = {
+    lst map (x => if (x._1 > x._2) x._1 else x._2)
   }
+
+//  Exercise 5
+
+//  Evaluate manually each of the following expressions before executing them.
+//  a) List(1, 2, 3, 4, 5) map (x => x % 2 != 0) // List(true, false, true, false, true)
+//  b) List(1, 2, 3, 4, 5) filter (x => x % 2 != 0) // List(1, 3, 5)
+//  c) List(5, 6, 23, 3) map (x => x % 3 == 0) // List(false, true, false, true)
+//  d) List(5, 6, 23, 3) filter (x => x % 3 == 0) // List(6, 3)
+//  e) List(1, 3, 7, 8, 12, 15) filter (x => x < 7) // List(1, 3)
+//  f) List(List(2, 3), List(1, 5, 3)) map (x => 7 :: x) // List(List(7, 2, 3), List(7, 1, 5, 3))
+//  g) List(1, 2, 3, 4, 5) map (x => List(x)) // List(List(1), List(2), List(3), List(4), List(5))
+//  h) List(1, 2, 3, 4, 5) filter (x => x % 2 != 0) map (x => x + 1) // List(2, 4, 6)
+//  i) List(1, 2, 3, 4, 5) map (x => x + 1) filter (x => x % 2 != 0) // List(3, 5)
 
   def main(args: Array[String]): Unit = {
     val lst = List((2.0, 4.0), (3.2, 1.9), (20.3, 4.0), (3.2, 10.9))
     val lst1 = List("Alex", "Is", "Someone", "Who", "Likes", "To", "Code")
-    println(myconcat(lst1))
-    println(myconcat2(lst1))
-    println(maximum(lst))
-    println(maximum2(lst))
+    val lst2 = List((2, 4), (3, 1), (20, 4), (3, 10), (11, 12))
+//    println(paresord2(lst2))
+    println(List(1, 2, 3, 4, 5) map (x => x + 1) filter (x => x % 2 != 0))
   }
 }
