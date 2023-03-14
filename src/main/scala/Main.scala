@@ -1,4 +1,3 @@
-import scala.::
 import scala.annotation.tailrec
 
 object Main {
