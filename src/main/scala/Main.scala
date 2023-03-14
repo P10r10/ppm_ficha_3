@@ -1,3 +1,4 @@
+import scala.::
 import scala.annotation.tailrec
 
 object Main {
@@ -125,24 +126,70 @@ object Main {
     lst map (x => if (x._1 > x._2) x._1 else x._2)
   }
 
-//  Exercise 5
+  //  Exercise 5
 
-//  Evaluate manually each of the following expressions before executing them.
-//  a) List(1, 2, 3, 4, 5) map (x => x % 2 != 0) // List(true, false, true, false, true)
-//  b) List(1, 2, 3, 4, 5) filter (x => x % 2 != 0) // List(1, 3, 5)
-//  c) List(5, 6, 23, 3) map (x => x % 3 == 0) // List(false, true, false, true)
-//  d) List(5, 6, 23, 3) filter (x => x % 3 == 0) // List(6, 3)
-//  e) List(1, 3, 7, 8, 12, 15) filter (x => x < 7) // List(1, 3)
-//  f) List(List(2, 3), List(1, 5, 3)) map (x => 7 :: x) // List(List(7, 2, 3), List(7, 1, 5, 3))
-//  g) List(1, 2, 3, 4, 5) map (x => List(x)) // List(List(1), List(2), List(3), List(4), List(5))
-//  h) List(1, 2, 3, 4, 5) filter (x => x % 2 != 0) map (x => x + 1) // List(2, 4, 6)
-//  i) List(1, 2, 3, 4, 5) map (x => x + 1) filter (x => x % 2 != 0) // List(3, 5)
+  //  Evaluate manually each of the following expressions before executing them.
+  //  a) List(1, 2, 3, 4, 5) map (x => x % 2 != 0) // List(true, false, true, false, true)
+  //  b) List(1, 2, 3, 4, 5) filter (x => x % 2 != 0) // List(1, 3, 5)
+  //  c) List(5, 6, 23, 3) map (x => x % 3 == 0) // List(false, true, false, true)
+  //  d) List(5, 6, 23, 3) filter (x => x % 3 == 0) // List(6, 3)
+  //  e) List(1, 3, 7, 8, 12, 15) filter (x => x < 7) // List(1, 3)
+  //  f) List(List(2, 3), List(1, 5, 3)) map (x => 7 :: x) // List(List(7, 2, 3), List(7, 1, 5, 3))
+  //  g) List(1, 2, 3, 4, 5) map (x => List(x)) // List(List(1), List(2), List(3), List(4), List(5))
+  //  h) List(1, 2, 3, 4, 5) filter (x => x % 2 != 0) map (x => x + 1) // List(2, 4, 6)
+  //  i) List(1, 2, 3, 4, 5) map (x => x + 1) filter (x => x % 2 != 0) // List(3, 5)
+
+  //  BONUS
+
+  def squareList(lst: List[Int]): List[Int] = lst match {
+    case Nil => Nil
+    case h :: t => h * h :: squareList(t)
+  }
+
+  def squareList2(lst: List[Int]): List[Int] = lst map (x => x * x)
+
+  def sum(f: Int => Int, a: Int, b: Int): Int = {
+    @annotation.tailrec
+    def loop(acc: Int, n: Int): Int = {
+      if (n > b) acc
+      else loop(acc + f(n), n + 1)
+    }
+
+    loop(0, a)
+  }
+
+  //  Exercise 6
+  //
+  //  Consider the following function:
+  //
+  //  def indicative(ind: String, telefs: List[String]) =
+  //    telefs filter (x => x.substring(0, ind.length).equals(ind))
+  //
+  //  which receives a list of digits with a callsign, a list of lists of digits representing
+  //  telephone numbers, and selects the numbers that begin with the given callsign.
+  //    For example:  indicative("253", List("253116787", "213448023", "253119905")
+  //      returns List("253116787", "253119905")
+  //  Redefine this function with explicit recursion, that is, avoiding the use of filter.
+
+  def indicative(ind: String, telefs: List[String]): List[String] = telefs match {
+    case Nil => List()
+    case h :: t => if (ind.equals(h.substring(0, ind.length))) h :: indicative(ind, t)
+    else indicative(ind, t)
+  }
+
+  //  Exercise 7
+  //
+  //  Implement a function to convert a list of names to a list of abbreviations for those names,
+  //  as follows:
+  //    List(“José Carlos Mendes”, “André Carlos Oliveira”) in List(“J.Mendes”, “A.Oliveira").
+  //  Note: use map and the s String Interpolator to create the
+  //  final String(e.g. s"${exp}. ${exp}").
+  //  Prepending s to any string literal allows the usage of variables / expressions directly in the string:
+
+  def abrev(lst: List[String]): List[String] = lst map (x => s"${x.head}.${x.split(" ").last}")
 
   def main(args: Array[String]): Unit = {
-    val lst = List((2.0, 4.0), (3.2, 1.9), (20.3, 4.0), (3.2, 10.9))
-    val lst1 = List("Alex", "Is", "Someone", "Who", "Likes", "To", "Code")
-    val lst2 = List((2, 4), (3, 1), (20, 4), (3, 10), (11, 12))
-//    println(paresord2(lst2))
-    println(List(1, 2, 3, 4, 5) map (x => x + 1) filter (x => x % 2 != 0))
+    val lst = List("José Carlos Mendes", "André Carlos Oliveira")
+    println(abrev(lst))
   }
 }
